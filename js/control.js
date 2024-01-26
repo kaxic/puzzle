@@ -16,6 +16,7 @@ class Control {
   //初期化関数
   reset() {
     //オブジェクト達
+    
     this.p = new Puzzle();
   }
 
