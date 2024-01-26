@@ -1,6 +1,7 @@
-const SIZE = 4;
+const SIZE = 3;
 const W = 90;
 const H = 90;
+const MOUSE = false;
 
 class Board{
     constructor(num,x,y){
@@ -15,7 +16,7 @@ class Board{
         ctx.drawImage(image[s],0,0,120,120,this.x,this.y,W,H);
     }
     update(){
-        const SPEED = 5;
+        const SPEED = 3;
         if(this.num == 0){
             this.x = this.targetX;
             this.y = this.targetY;
@@ -109,7 +110,7 @@ class Puzzle{
             if(this.board[i].update())return;
         }
 
-        if(clicked){
+        if(clicked&&MOUSE){
             for(let i = 0;i < this.board.length;i++){
                 if(this.board[i].isContain(eX,eY)){
                     let can = this.canMove(i);
@@ -131,6 +132,26 @@ class Puzzle{
             }
 
             clicked = false;
+        }
+
+        if(!MOUSE){
+            for(let i = 0;i < this.board.length;i++){
+                if(this.board[i].num == 0){
+                    if(i%SIZE - 1 >= 0 && key["ArrowRight"]){
+                        this.tmp(i,i-1);
+                    }
+                    if(i%SIZE + 1 < SIZE && key["ArrowLeft"]){
+                        this.tmp(i,i+1);
+                    }
+                    if(i/SIZE - 1 >= 0 && key["ArrowDown"]){
+                        this.tmp(i,i-SIZE);
+                    }
+                    if(i/SIZE + 1 < SIZE && key["ArrowUp"]){
+                        this.tmp(i,i+SIZE);
+                    }
+                    break;
+                }
+            }
         }
     }
 
